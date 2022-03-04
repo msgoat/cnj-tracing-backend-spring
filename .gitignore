@@ -49,3 +49,5 @@ mvnw.cmd
 
 # MAVEN build artifacts
 target/
+.flattened-pom.xml
+
