@@ -6,7 +6,7 @@
     <artifactId>cnj-tracing-backend-spring</artifactId>
     <version>${revision}${changelist}${sha1}</version>
     <packaging>jar</packaging>
-    <description>Cloud native Java backend using Spring Data for persistence based on Spring Boot</description>
+    <description>Cloud native Java backend using OpenTracing via Jaeger based on Spring Boot</description>
     <properties>
         <!-- new Maven version management -->
         <revision>2.0.0</revision>
