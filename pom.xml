@@ -9,7 +9,7 @@
     <description>Cloud native Java backend using OpenTracing via Jaeger based on Spring Boot</description>
     <properties>
         <!-- new Maven version management -->
-        <revision>2.0.0</revision>
+        <revision>2.1.0</revision>
         <sha1></sha1>
         <changelist></changelist>
         <!-- common properties -->
@@ -17,21 +17,21 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <!-- runtime related properties -->
         <java.version>11</java.version>
-        <spring.boot.version>2.6.4</spring.boot.version>
+        <spring.boot.version>2.7.1</spring.boot.version>
+        <start-class>group.msg.at.cloud.cloudtrain.SpringTracingApplication</start-class>
         <!-- common logging dependencies -->
-        <slf4j.version>1.7.32</slf4j.version>
-        <logstash.logback.encoder.version>6.1</logstash.logback.encoder.version>
+        <logstash.logback.encoder.version>7.2</logstash.logback.encoder.version>
         <!-- common test dependencies -->
         <junit.version>5.8.1</junit.version>
         <restassured.version>4.4.0</restassured.version>
         <cnj.common.test.version>3.0.1</cnj.common.test.version>
         <!-- common persistence dependencies -->
+        <flyway.version>6.4.2</flyway.version>
+        <postgres.jdbc.version>42.3.1</postgres.jdbc.version>
         <!-- common security dependencies -->
         <common.security.version>1.2.0</common.security.version>
         <!-- common monitoring dependencies -->
-        <micrometer.version>1.5.5</micrometer.version>
-        <!-- common tracing dependencies -->
-        <spring.opentracing.version>3.2.0</spring.opentracing.version>
+        <micrometer.version>1.9.1</micrometer.version>
         <!-- docker related properties -->
         <docker.registry.name>docker.cloudtrain.aws.msgoat.eu</docker.registry.name>
         <docker.organization.name>cloudtrain</docker.organization.name>
@@ -80,6 +80,14 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
                 <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- JUnit 5.x -->
+            <dependency>
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
+                <version>${junit.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -133,7 +141,7 @@
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
-            <version>1.6.3</version>
+            <version>1.6.9</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -150,17 +158,17 @@
         <dependency>
             <groupId>net.logstash.logback</groupId>
             <artifactId>logstash-logback-encoder</artifactId>
-            <version>7.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>io.micrometer</groupId>
-            <artifactId>micrometer-registry-prometheus</artifactId>
-            <version>1.8.2</version>
+            <version>${logstash.logback.encoder.version}</version>
         </dependency>
         <dependency>
             <groupId>group.msg.at.cloud.common</groupId>
             <artifactId>cnj-common-observability-spring</artifactId>
-            <version>0.2.0</version>
+            <version>0.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+            <version>${micrometer.version}</version>
         </dependency>
         <!-- showcase specific section -->
         <dependency>
@@ -298,6 +306,8 @@
                     </executions>
                     <configuration>
                         <mainClass>${start-class}</mainClass>
+                        <classifier>spring</classifier>
+                        <attach>false</attach>
                     </configuration>
                 </plugin>
                 <!-- cloud native specific maven plugins section -->
@@ -460,7 +470,7 @@
                                         <resource>
                                             <directory>${project.build.directory}</directory>
                                             <includes>
-                                                <include>*.jar</include>
+                                                <include>*-spring.jar</include>
                                             </includes>
                                         </resource>
                                     </resources>
@@ -642,7 +652,7 @@
                                         <resource>
                                             <directory>${project.build.directory}</directory>
                                             <includes>
-                                                <include>*.jar</include>
+                                                <include>*-spring.jar</include>
                                             </includes>
                                         </resource>
                                     </resources>

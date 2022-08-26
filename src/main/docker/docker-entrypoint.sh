@@ -2,7 +2,7 @@
 
 if [ "$1" = 'java' ]; then
 	echo "Running Spring Boot application with options:"
-	echo "JAVA_APPLICATION=`ls ${JAVA_APPLICATION_HOME}/*.jar`"
+	echo "JAVA_APPLICATION=`ls ${JAVA_APPLICATION_HOME}/*-spring.jar`"
 	echo "JAVA_APPLICATION_HOME=${JAVA_APPLICATION_HOME}"
 	echo "JAVA_OPTS=${JAVA_OPTS}"
 	echo "EXT_JAVA_OPTS=${EXT_JAVA_OPTS}"
