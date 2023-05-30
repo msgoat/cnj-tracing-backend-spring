@@ -9,7 +9,7 @@
     <description>Cloud native Java backend using OpenTracing via Jaeger based on Spring Boot</description>
     <properties>
         <!-- new Maven version management -->
-        <revision>3.0.0</revision>
+        <revision>3.1.0</revision>
         <sha1>.12345678</sha1>
         <changelist>.LOCAL</changelist>
         <!-- common properties -->
@@ -17,7 +17,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <!-- runtime related properties -->
         <java.version>17</java.version>
-        <spring.boot.version>3.0.2</spring.boot.version>
+        <spring.boot.version>3.1.0</spring.boot.version>
         <start-class>group.msg.at.cloud.cloudtrain.SpringTracingApplication</start-class>
         <!-- common logging dependencies -->
         <logstash.logback.encoder.version>7.3</logstash.logback.encoder.version>
@@ -44,7 +44,7 @@
         <docker.verbose>true</docker.verbose>
         <docker.test.target.route>http://localhost:38080</docker.test.target.route>
         <!-- kubernetes related properties -->
-        <k8s.cluster.route>https://apps.cloudtrain.aws.msgoat.eu</k8s.cluster.route>
+        <k8s.cluster.route>https://${k8s.ingress.host}</k8s.cluster.route>
         <k8s.cluster.namespace>default</k8s.cluster.namespace>
         <k8s.ingress.host>apps.cloudtrain.aws.msgoat.eu</k8s.ingress.host>
         <k8s.ingress.path>/${k8s.cluster.namespace}/${project.artifactId}</k8s.ingress.path>
@@ -170,9 +170,16 @@
         </dependency>
         <!-- showcase specific section -->
         <dependency>
-            <groupId>io.opentracing.contrib</groupId>
-            <artifactId>opentracing-spring-jaeger-web-starter</artifactId>
-            <version>${spring.opentracing.version}</version>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-tracing</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-tracing-bridge-otel</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-exporter-otlp</artifactId>
         </dependency>
         <!-- =========================== -->
         <!-- test time dependencies      -->

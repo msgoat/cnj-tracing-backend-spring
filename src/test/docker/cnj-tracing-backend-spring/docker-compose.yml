@@ -26,7 +26,9 @@ services:
       retries: 5
 
   jaeger:
-    image: jaegertracing/all-in-one:1.30
+    image: jaegertracing/all-in-one:latest
+    environment:
+      COLLECTOR_OTLP_ENABLED: true
 
   downstream:
     image: docker.cloudtrain.aws.msgoat.eu/cloudtrain/cnj-tracing-downstream:latest
@@ -34,6 +36,7 @@ services:
       DOCKER_JAVA_OPTS: "-XX:+UseContainerSupport -Xms1g -Xmx1g"
       SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI: https://oidc.cloudtrain.aws.msgoat.eu/realms/cloudtrain/protocol/openid-connect/certs
       SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: https://oidc.cloudtrain.aws.msgoat.eu/realms/cloudtrain
+      MANAGEMENT_OTLP_TRACING_ENDPOINT: "http://jaeger:4318/v1/traces"
     depends_on:
       jaeger:
         condition: service_started
@@ -54,6 +57,7 @@ services:
       POSTGRES_DB_NAME: cloudtrain
       POSTGRES_DB_USER: postgres
       POSTGRES_DB_PASSWORD: changeit
+      MANAGEMENT_OTLP_TRACING_ENDPOINT: "http://jaeger:4318/v1/traces"
     depends_on:
       downstream:
         condition: service_started
