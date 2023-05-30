@@ -45,8 +45,8 @@
         <docker.test.target.route>http://localhost:38080</docker.test.target.route>
         <!-- kubernetes related properties -->
         <k8s.cluster.route>https://${k8s.ingress.host}</k8s.cluster.route>
-        <k8s.cluster.namespace>default</k8s.cluster.namespace>
-        <k8s.ingress.host>apps.cloudtrain.aws.msgoat.eu</k8s.ingress.host>
+        <k8s.cluster.namespace>cloudtrain</k8s.cluster.namespace>
+        <k8s.ingress.host>train2023-dev.k8s.cloudtrain.aws.msgoat.eu</k8s.ingress.host>
         <k8s.ingress.path>/${k8s.cluster.namespace}/${project.artifactId}</k8s.ingress.path>
         <k8s.test.target.route>${k8s.cluster.route}${k8s.ingress.path}</k8s.test.target.route>
         <!-- pinning versions of common maven plugins -->
@@ -871,7 +871,6 @@
         <profile>
             <id>integration-test-stage</id>
             <properties>
-                <k8s.cluster.namespace>cloudtrain-int</k8s.cluster.namespace>
                 <spring-boot.repackage.skip>true</spring-boot.repackage.skip>
             </properties>
             <build>
