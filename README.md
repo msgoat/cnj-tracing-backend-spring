@@ -1,6 +1,6 @@
 # cnj-tracing-backend-spring
 
-Cloud native Java backend using OpenTracing via Jaeger based on Spring Boot.
+Cloud native Java backend using Micrometer Telemetry/OpenTelemetry via Jaeger based on Spring Boot.
 
 ## Status
 

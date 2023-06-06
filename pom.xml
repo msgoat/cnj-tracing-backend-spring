@@ -6,7 +6,7 @@
     <artifactId>cnj-tracing-backend-spring</artifactId>
     <version>${revision}${changelist}${sha1}</version>
     <packaging>jar</packaging>
-    <description>Cloud native Java backend using OpenTracing via Jaeger based on Spring Boot</description>
+    <description>Cloud native Java backend using Micrometer Telemetry/OpenTelemetry via Jaeger based on Spring Boot</description>
     <properties>
         <!-- new Maven version management -->
         <revision>3.1.0</revision>
@@ -31,6 +31,8 @@
         <postgres.jdbc.version>42.6.0</postgres.jdbc.version>
         <!-- common security dependencies -->
         <cnj.common.security.version>2.0.0</cnj.common.security.version>
+        <!-- common rest dependencies -->
+        <cnj.common.observability.version>1.0.0</cnj.common.observability.version>
         <!-- common monitoring dependencies -->
         <micrometer.version>1.10.3</micrometer.version>
         <!-- common tracing dependencies -->
@@ -46,7 +48,7 @@
         <!-- kubernetes related properties -->
         <k8s.cluster.route>https://${k8s.ingress.host}</k8s.cluster.route>
         <k8s.cluster.namespace>cloudtrain</k8s.cluster.namespace>
-        <k8s.ingress.host>train2023-dev.k8s.cloudtrain.aws.msgoat.eu</k8s.ingress.host>
+        <k8s.ingress.host>apps.cloudtrain.aws.msgoat.eu</k8s.ingress.host>
         <k8s.ingress.path>/${k8s.cluster.namespace}/${project.artifactId}</k8s.ingress.path>
         <k8s.test.target.route>${k8s.cluster.route}${k8s.ingress.path}</k8s.test.target.route>
         <!-- pinning versions of common maven plugins -->
@@ -109,16 +111,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-tomcat</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-undertow</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -142,6 +134,11 @@
             <version>${cnj.common.security.version}</version>
         </dependency>
         <dependency>
+            <groupId>group.msg.at.cloud.common</groupId>
+            <artifactId>cnj-common-observability-spring</artifactId>
+            <version>${cnj.common.observability.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
@@ -157,11 +154,6 @@
             <groupId>net.logstash.logback</groupId>
             <artifactId>logstash-logback-encoder</artifactId>
             <version>${logstash.logback.encoder.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>group.msg.at.cloud.common</groupId>
-            <artifactId>cnj-common-observability-spring</artifactId>
-            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>io.micrometer</groupId>
@@ -219,6 +211,12 @@
                         <source>${java.version}</source>
                         <target>${java.version}</target>
                         <parameters>true</parameters>
+                        <showDeprecation>true</showDeprecation>
+                        <showWarnings>true</showWarnings>
+                        <compilerArgs>
+                            <arg>-Xlint</arg>
+                            <!-- <arg>-Xdoclint</arg> -->
+                        </compilerArgs>
                     </configuration>
                 </plugin>
                 <plugin>
