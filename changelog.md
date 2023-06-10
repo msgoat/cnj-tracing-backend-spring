@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.2.0] - 2023-06-09
+- upgraded postgres to version 15
+- added docker-compose.yml to run the showcase locally
+
 ## [3.1.0] - 2023-05-26
 ### Changed
 - upgraded to Spring Boot 3.1.0

@@ -10,3 +10,21 @@ Cloud native Java backend using Micrometer Telemetry/OpenTelemetry via Jaeger ba
 
 Check [changelog](changelog.md) for latest version and release information.
 
+## HOW-TO run this showcase locally
+
+In order to run the whole showcase locally, just run the following docker commands in the project folder:
+
+```shell 
+docker compose up -d
+docker compose logs -f 
+```
+The showcase application will be accessible via `http://localhost:38100`.
+
+The Jaeger UI will be available at `http://localhost:37100`.
+
+Press `Ctlr+c` to stop tailing the container logs and run the following docker command to stop the show case:
+
+```shell 
+docker compose down
+```
+
