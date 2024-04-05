@@ -119,4 +119,4 @@ metrics:
 tracing:
   enabled: true
   opentelemetry:
-    endpoint: http://tracing-jaeger-collector:4318/v1/traces
+    endpoint: http://tracing-jaeger-collector.tracing:4318/v1/traces
